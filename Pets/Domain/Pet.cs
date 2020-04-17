@@ -1,38 +1,23 @@
 ﻿using System;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Pets.Domain
 {
     public class Pet
     {
+        [JsonConstructor]
         public Pet(string name, PetType petType)
         {
-            if (!IsValid(name, petType))
-                throw new Exception(GetErrors(name, petType));
-
             Name = name;
             PetType = petType;
         }
 
+        [JsonProperty("name", Required = Required.Always)]
         public string Name { get; set; }
+        [JsonProperty("type", Required = Required.Always)]
         public PetType PetType { get; set; }
 
         public bool IsCat => PetType == PetType.Cat;
-
-        private bool IsValid(string name, PetType petType)
-        {
-            return string.IsNullOrWhiteSpace(GetErrors(name, petType));
-        }
-
-        private string GetErrors(string name, PetType petType)
-        {
-            StringBuilder errors = new StringBuilder();
-            if (string.IsNullOrWhiteSpace(name))
-                errors.AppendLine("Pets need a name");
-            if (petType == PetType.Unknown)
-                errors.AppendLine("Pets need a type specified");
-
-            return errors.ToString();
-        }
     }
 }

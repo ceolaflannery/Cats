@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Pets.DataAccess;
 using Pets.Formatters;
 using Pets.GroupingTransformers;
+using Newtonsoft.Json;
 
 namespace Pets
 {
@@ -16,7 +17,8 @@ namespace Pets
 
             var service = _serviceProvider.GetService<IPetService>();
 
-            Console.Write(service.GetPetDetails());
+            var petDetails = service.GetPetDetails();
+            Console.Write(petDetails.Result);
             
             DisposeServices();
         }

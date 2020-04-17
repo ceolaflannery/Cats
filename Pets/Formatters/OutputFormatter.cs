@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -6,22 +7,33 @@ namespace Pets.Formatters
 {
     public class OutputFormatter : IOutputFormatter
     {
-        public string FormatAsHeaderAndSubPoints(IEnumerable<IGrouping<string, string>> query)
+        public string FormatAsHeaderAndSubPoints(IEnumerable<IGrouping<string, string>> groupings)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach(var gender in query)
+            try
             {
-                sb.AppendLine(gender.Key);
-                sb.AppendLine("----------");
+                StringBuilder sb = new StringBuilder();
+                if (groupings == null || groupings.Count() == 0)
+                    return "There is nothing to show right now";
 
-                foreach (var p in gender)
+                foreach (var group in groupings)
                 {
-                    sb.AppendLine("-- " + p);
-                }
-                sb.AppendLine();
-            }
+                    sb.AppendLine(group.Key);
+                    sb.AppendLine("----------");
 
-            return sb.ToString();
+                    foreach (var item in group)
+                    {
+                        sb.AppendLine("-- " + item);
+                    }
+                    sb.AppendLine();
+                }
+
+                return sb.ToString();
+            }
+            catch (Exception)
+            {
+                // Log Exception details
+                throw new Exception("Error occured formatting output.");
+            }
         }
     }
 }
