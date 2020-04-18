@@ -48,11 +48,7 @@ namespace Pets.Tests.GroupingTransformers
         }
 
         [Fact]
-<<<<<<< HEAD
         public void GroupPetNamesByOwnersGenderForSpecifiedPetType_WhenSpecifiedPetTypeIsUnknown_ShouldThrowException()
-=======
-        public void GroupPetNamesByOwnersGenderForSpecifiedPetType_WhenPetTypeIsUnknown_ShouldThrowException()
->>>>>>> b91f4ce6816e9cd60be4d64410e8408ebb55ef8c
         {
             List<Person> people = OnePersonWithFish;
 
@@ -89,10 +85,7 @@ namespace Pets.Tests.GroupingTransformers
         {
         }
 
-<<<<<<< HEAD
         #region Setup Test Data
-=======
->>>>>>> b91f4ce6816e9cd60be4d64410e8408ebb55ef8c
         private static List<Person> PeopleWithCats =>
                 new List<Person> {
                     new Person("M", new List<Pet> { new Pet("rusty", PetType.Cat) }),
@@ -122,11 +115,6 @@ namespace Pets.Tests.GroupingTransformers
             var petNames = new List<string>();
             return petNames.GroupBy(o => "");
         }
-<<<<<<< HEAD
         #endregion
     }
 }
-=======
-    }
-}
->>>>>>> b91f4ce6816e9cd60be4d64410e8408ebb55ef8c
