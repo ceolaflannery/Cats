@@ -2,8 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Pets.DataAccess;
 using Pets.Formatters;
-using Pets.GroupingTransformers;
-using Newtonsoft.Json;
+using Pets.DataProcessing;
 
 namespace Pets
 {
@@ -27,7 +26,7 @@ namespace Pets
         {
             var collection = new ServiceCollection();
             collection.AddScoped<IPetService, PetService>();
-            collection.AddScoped<IPetGroupingTransformer, PetGroupingTransformer>();
+            collection.AddScoped<IProcessor, Processor>();
             collection.AddScoped<IOutputFormatter, OutputFormatter>(); 
             collection.AddScoped<IPersonRepository, PersonRepository>();
             _serviceProvider = collection.BuildServiceProvider();

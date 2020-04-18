@@ -9,23 +9,25 @@ namespace Pets.DataAccess
 {
     public class PersonRepository : IPersonRepository
     {
-        public async Task<IEnumerable<Person>> GetPeopleAndTheirPets()
+        private readonly string Url = "http://agl-developer-test.azurewebsites.net/people.json";
+
+        public async Task<IEnumerable<Person>> GetPeople()
         {
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var result = await client.GetStringAsync("http://agl-developer-test.azurewebsites.net/people.json");
+                    var result = await client.GetStringAsync(Url);
 
                     return JsonConvert.DeserializeObject<IEnumerable<Person>>(result);
                 }
             }
-            catch (JsonSerializationException ex)
+            catch (JsonSerializationException)
             {
                 // Log issue detail
                 throw new Exception("Issue serialising the dataset");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log issue detail
                 throw new Exception("Unknow error happened while retrieving data");

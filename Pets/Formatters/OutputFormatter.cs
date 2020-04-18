@@ -9,31 +9,34 @@ namespace Pets.Formatters
     {
         public string FormatAsHeaderAndSubPoints(IEnumerable<IGrouping<string, string>> groupings)
         {
-            try
+            StringBuilder sb = new StringBuilder();
+
+            if (groupings == null || groupings.Count() == 0)
             {
-                StringBuilder sb = new StringBuilder();
-                if (groupings == null || groupings.Count() == 0)
-                    return "There is nothing to show right now";
+                // Log details
+                throw new Exception("Data to be formatted has not been specified");
+            }
 
-                foreach (var group in groupings)
+            foreach (var group in groupings)
+            {
+                if (group == null || group.Count() == 0)
                 {
-                    sb.AppendLine(group.Key);
-                    sb.AppendLine("----------");
-
-                    foreach (var item in group)
-                    {
-                        sb.AppendLine("-- " + item);
-                    }
-                    sb.AppendLine();
+                    // Log details
+                    throw new Exception($"No data specified for group {group}");
                 }
 
-                return sb.ToString();
+                sb.AppendLine(group.Key);
+                sb.AppendLine("----------");
+
+                foreach (var item in group)
+                {
+                    sb.AppendLine("-- " + item);
+                }
+                sb.AppendLine();
             }
-            catch (Exception)
-            {
-                // Log Exception details
-                throw new Exception("Error occured formatting output.");
-            }
+
+            return sb.ToString();
+            
         }
     }
 }

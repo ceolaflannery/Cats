@@ -1,36 +1,41 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Pets.DataAccess;
+using Pets.DataProcessing;
 using Pets.Domain;
 using Pets.Formatters;
-using Pets.GroupingTransformers;
 
 namespace Pets
 {
     public class PetService : IPetService
     {
         private readonly IPersonRepository _repository;
-        private readonly IPetGroupingTransformer _petGroupingTransformer;
-        private readonly IOutputFormatter _stringFormatter;
+        private readonly IProcessor _processor;
+        private readonly IOutputFormatter _outputFormatter;
 
-        public PetService(IPersonRepository repository, IPetGroupingTransformer petGroupingTransformer, IOutputFormatter stringFormatter)
+        public PetService(IPersonRepository repository, IProcessor processor, IOutputFormatter outputFormatter)
         {
             _repository = repository;
-            _petGroupingTransformer = petGroupingTransformer;
-            _stringFormatter = stringFormatter;
+            _processor = processor;
+            _outputFormatter = outputFormatter;
         }
 
         public async Task<string> GetPetDetails()
         {
             try
             {
-                var peopleAndTheirPets = await _repository.GetPeopleAndTheirPets();
-                if (peopleAndTheirPets == null)
-                    return "No people retrieved";
+                var people = await _repository.GetPeople();
+                if (people == null)
+                    return "No people found";
 
-                var catsByOwnersGender = _petGroupingTransformer.GroupSpecifiedPetTypeByOwnersGender(peopleAndTheirPets, PetType.Cat);
+                var catsByOwnersGender = _processor.GroupPetNamesByOwnersGenderForSpecifiedPetType(people, PetType.Cat);
+                if (catsByOwnersGender == null || catsByOwnersGender.Count() == 0)
+                {
+                    return "No cats found";
+                }
 
-                return _stringFormatter.FormatAsHeaderAndSubPoints(catsByOwnersGender);
+                return _outputFormatter.FormatAsHeaderAndSubPoints(catsByOwnersGender);
             }
             catch (Exception ex)
             {

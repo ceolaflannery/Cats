@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Pets.Domain
 {
@@ -17,7 +15,5 @@ namespace Pets.Domain
         public string Name { get; set; }
         [JsonProperty("type", Required = Required.Always)]
         public PetType PetType { get; set; }
-
-        public bool IsCat => PetType == PetType.Cat;
     }
 }

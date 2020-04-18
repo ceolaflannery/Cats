@@ -6,6 +6,6 @@ namespace Pets.DataAccess
 {
     public interface IPersonRepository
     {
-        Task<IEnumerable<Person>> GetPeopleAndTheirPets();
+        Task<IEnumerable<Person>> GetPeople();
     }
 }
