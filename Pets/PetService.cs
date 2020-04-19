@@ -5,6 +5,7 @@ using Pets.DataAccess;
 using Pets.DataProcessing;
 using Pets.Domain;
 using Pets.Formatters;
+using Pets.Helpers;
 
 namespace Pets
 {
@@ -27,11 +28,11 @@ namespace Pets
             {
                 var people = await _repository.GetPeople();
                 if (people == null)
-                    return "No people found";
+                    return LoggingHelper.LogErrorAndReturnMessage("No people found");
 
                 var catsByOwnersGender = _processor.GroupPetNamesByOwnersGenderForSpecifiedPetType(people, PetType.Cat);
                 if (catsByOwnersGender == null || catsByOwnersGender.Count() == 0)
-                    return "No cats found";
+                    return LoggingHelper.LogErrorAndReturnMessage("No cats found");
 
                 return _outputFormatter.FormatAsHeaderAndSubPoints(catsByOwnersGender);
             }

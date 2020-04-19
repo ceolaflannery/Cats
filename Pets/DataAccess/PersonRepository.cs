@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Pets.Domain;
+using Pets.Helpers;
 
 namespace Pets.DataAccess
 {
@@ -22,15 +23,13 @@ namespace Pets.DataAccess
                     return JsonConvert.DeserializeObject<IEnumerable<Person>>(result);
                 }
             }
-            catch (JsonSerializationException)
+            catch (JsonSerializationException ex)
             {
-                // Log issue detail
-                throw new Exception("Issue serialising the dataset");
+                throw LoggingHelper.LogErrorAndCreateException<JsonSerializationException>("Issue serialising the dataset", ex);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log issue detail
-                throw new Exception("Unknow error happened while retrieving data");
+                throw LoggingHelper.LogErrorAndCreateException<Exception>("Unknow error happened while retrieving data", ex);
             }
         }
     }

@@ -4,12 +4,17 @@
 
 Requires [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) to run.
 
+### Run
 ```sh
-clone
 cd Pets
 dotnet run
 ```
 
+### Test
+```sh
+cd Pets
+dotnet test
+```
 
 ## Assumptions
 - All business logic assumptions are documented in unit test names
@@ -24,7 +29,7 @@ dotnet run
 
 
 ## What I could have done with more time
-- Implemented logging
+- Implemented logging todos
 - Implemented unfinished unit tests
 - Pull out reusable setup and verify methods in tests to somewhere common
-- Get more specific on the domain by mapping the response to PetOwner and Cat types. This would allow separating the filtering from the grouping/projection happening in the line statement but would complicate things a little when extending the solution
+- Get more specific on the domain by mapping the response to PetOwner and Cat types. This would allow separating the filtering from the grouping/projection happening in the Line statement but would complicate things a little when extending the solution and require more iteration through the collection

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Pets.Helpers;
 
 namespace Pets.Formatters
 {
@@ -13,16 +14,14 @@ namespace Pets.Formatters
 
             if (groupings == null || groupings.Count() == 0)
             {
-                // Log details
-                throw new Exception("Data to be formatted has not been specified");
+                throw LoggingHelper.LogErrorAndCreateException<ArgumentException>("Data to be formatted has not been specified");
             }
 
             foreach (var group in groupings)
             {
                 if (group == null || group.Count() == 0)
                 {
-                    // Log details
-                    throw new Exception($"No data specified for group {group}");
+                    throw LoggingHelper.LogErrorAndCreateException<ArgumentException>($"No data specified for group {group}");
                 }
 
                 sb.AppendLine(group.Key);

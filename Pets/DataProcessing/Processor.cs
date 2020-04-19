@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pets.Domain;
+using Pets.Helpers;
 
 namespace Pets.DataProcessing
 {
@@ -28,20 +29,19 @@ namespace Pets.DataProcessing
                     .Distinct()
                     .GroupBy(x => x.OwnerGender, x => x.Pet);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Log Exception details
-                throw new Exception("Error occured grouping pets by their owner's gender");
+                throw LoggingHelper.LogErrorAndCreateException<Exception>("Error occured grouping pets by their owner's gender", ex);
             }
         }
 
         private static void ThrowExceptionIfArgumentsInvalid(IEnumerable<Person> people, PetType specifiedPetType)
         {
             if (people == null || !people.Any())
-                throw new ArgumentException("Unable to group pet names when no owners have been specified");
+                throw LoggingHelper.LogErrorAndCreateException<ArgumentException>("Unable to group pet names when no owners have been specified");
 
             if (specifiedPetType == PetType.Unknown)
-                throw new ArgumentException("Pet type must be specified");
+                throw LoggingHelper.LogErrorAndCreateException<ArgumentException>("Pet type must be specified");
         }
     }
 }
