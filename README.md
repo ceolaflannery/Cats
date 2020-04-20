@@ -32,4 +32,7 @@ dotnet test
 - Implemented logging todos
 - Implemented unfinished unit tests
 - Pull out reusable setup and verify methods in tests to somewhere common
-- Get more specific on the domain by mapping the response to PetOwner and Cat types. This would allow separating the filtering from the grouping/projection happening in the Line statement but would complicate things a little when extending the solution and require more iteration through the collection
+
+## Another possible approach
+Get more specific on the domain by mapping the response to PetOwner and Cat types. 
+This would allow separating the filtering from the grouping/projection happening in the Linq statement but would complicate things a little when extending the solution. I would also require more iteration through the collection and maping so whether to go this way would depend on the trade offs for the project e.g. How critical is the speed, How critical is it to be able to extend the solution rapidly, what direction the solution might be extended etc
